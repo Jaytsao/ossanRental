@@ -24,10 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/_07_email/SendEmail")
 public class SendEmail extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    String username = "alan841203@gmail.com";
-    String password = "0911076028";
+    String username = "OssanBean@gmail.com";
+    String password = "Ossanjava011";
     public SendEmail() {
-        // TODO Auto-generated constructor stub
+       
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
