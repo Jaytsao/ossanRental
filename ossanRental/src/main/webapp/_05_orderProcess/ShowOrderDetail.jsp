@@ -32,12 +32,12 @@
 	    </thead>
 	
 	    <tbody>
-	    	<c:forEach varStatus="stVar"  var="aDetailOrder"  items="${OrderBean.items}" >
+	    	<c:forEach varStatus="stVar"  var="aDetailOrder"  items="${OrderBean.orderItemBean}" >
 		        <tr style="height:20px">
 		            <td>${stVar.index+1}</td>
 		            
 		            
-		            <td>${aDetailOrder.pKey}</td>
+		            <td>${aDetailOrder.ossanBean.ossanNo}</td>
 		            <td>${aDetailOrder.ossanBean.name}</td>
 		            <td>${aDetailOrder.ossanBean.nickname}</td>
 		            <td>${aDetailOrder.quantity}</td>

@@ -27,10 +27,10 @@ public class OrderBean implements Serializable{
 	private String CancelTag;
 	private int totalAmount;
 	private String comment;
-	private Set<OrderItemBean> orderItemBean = new LinkedHashSet<OrderItemBean>();
+	private Set<OrderItemBean> orderItemBean ;
 	public OrderBean(Integer orderNo, String invoiceTitle, String bno, String phone, String email, String city,
 			String district, String address, Timestamp orderDate, Date deliverDate, String cancelTag, int totalAmount,
-			String comment, Set<OrderItemBean> orderItemBean) {
+			String comment) {
 		super();
 		this.orderNo = orderNo;
 		this.invoiceTitle = invoiceTitle;
@@ -45,7 +45,6 @@ public class OrderBean implements Serializable{
 		CancelTag = cancelTag;
 		this.totalAmount = totalAmount;
 		this.comment = comment;
-		this.orderItemBean = orderItemBean;
 	}
 	
 	public OrderBean() {}

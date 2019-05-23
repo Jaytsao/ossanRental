@@ -38,14 +38,14 @@ and is wrapped around the whole page content, except for the footer in this exam
   <c:forEach varStatus="stVar"  var="aOssanBean"  items="${products_DPP}" >
   
   <div class="w3-card-4 w3-margin w3-white">
-    <img src="${pageContext.servletContext.contextPath}/_00_init/getImage?id=${aOssanBean.artNo}&type=article" alt="Nature" style="width:100%">
+    <img src="${pageContext.servletContext.contextPath}/_00_init/getImage?id=${aOssanBean.articleNo}&type=article" alt="Nature" style="width:100%">
     <div class="w3-container">
       <h3><b>${aOssanBean.title}</b></h3>
-      <h5>by   ${aOssanBean.ossanbean.name} <span class="w3-opacity"><small>${aOssanBean.updateTime}</small></span></h5>
+      <h5>by   ${aOssanBean.ossanBean.name} <span class="w3-opacity"><small>${aOssanBean.updateTime}</small></span></h5>
     </div>
 
     <div class="w3-container">
-      <p id="sArticle">${aOssanBean.sArticle}</p>
+      <p id="sArticle">${aOssanBean.sContent}</p>
       <div class="w3-row">
         <div class="w3-col m8 s12">
           <p><button class="w3-button w3-padding-large w3-white w3-border"><b>READ MORE »</b></button></p>
@@ -94,9 +94,9 @@ and is wrapped around the whole page content, except for the footer in this exam
                          
   <div class="w3-card w3-margin w3-margin-top">
   
-  <img src="${pageContext.servletContext.contextPath}/_00_init/getImage?id=${aOssanBean.artNo}&type=article" style="width:100%">
+  <img src="${pageContext.servletContext.contextPath}/_00_init/getImage?id=${aOssanBean.articleNo}&type=article" style="width:100%">
     <div class="w3-container w3-white">
-      <h4><b>by   ${aOssanBean.ossanbean.name}</b></h4>
+      <h4><b>by   ${aOssanBean.ossanBean.name}</b></h4>
       <p>${aOssanBean.title}</p>
     </div>
   </div><hr>

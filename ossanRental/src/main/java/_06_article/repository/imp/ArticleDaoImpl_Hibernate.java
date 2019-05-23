@@ -3,8 +3,6 @@ package _06_article.repository.imp;
 
 import java.util.List;
 
-
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -14,7 +12,7 @@ import _00_init.util.SystemUtils2018;
 import _03_listOssans.model.OssanBean;
 import _03_listOssans.repository.OssanDao;
 import _03_listOssans.repository.impl.OssanDaoImpl_Hibernate;
-import _06_article.model.Article;
+import _06_article.model.ArticleBean;
 import _06_article.repository.ArticleDao;
 
 public class ArticleDaoImpl_Hibernate implements ArticleDao{
@@ -42,18 +40,18 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao{
 	//取出大叔自己的文章(ossan用，一頁)
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Article> getPageArticles(int ossanId) {
-		List<Article> list = null;
+	public List<ArticleBean> getPageArticles(int ossanId) {
+		List<ArticleBean> list = null;
 		Session session = factory.getCurrentSession();
-		String hql = "FROM Article a WHERE a.ossanbean.ossanNo = :ossanId ORDER BY a.updateTime DESC";
+		String hql = "FROM ArticleBean a WHERE a.ossanBean.ossanNo = :ossanId ORDER BY a.updateTime DESC";
 		int startRecordNo = (pageNo - 1) * recordsPerPage;
 		list = session.createQuery(hql).setParameter("ossanId", ossanId).
 				setFirstResult(startRecordNo).
 				setMaxResults(recordsPerPage).
 				list();
 		
-			for(Article art : list) {
-				art.setsArticle(SystemUtils2018.clobToStringWindows(art.getArticle()));
+			for(ArticleBean art : list) {
+				art.setsContent(SystemUtils2018.clobToStringWindows(art.getContent()));
 			}		
 		
 		return list;
@@ -61,17 +59,17 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao{
 	//取出所有的文章(visitor , admin用，一頁)
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Article> getPageArticles() {
-		List<Article> list = null;
+	public List<ArticleBean> getPageArticles() {
+		List<ArticleBean> list = null;
 		Session session = factory.getCurrentSession();
-		String hql = "FROM Article a ORDER BY a.updateTime DESC";
+		String hql = "FROM ArticleBean a ORDER BY a.updateTime DESC";
 		int startRecordNo = (pageNo - 1) * recordsPerPage;
 		list = session.createQuery(hql).
 				setFirstResult(startRecordNo).
 				setMaxResults(recordsPerPage).
 				list();
-		for(Article art : list) {
-			art.setsArticle(SystemUtils2018.clobToStringWindows(art.getArticle()));
+		for(ArticleBean art : list) {
+			art.setsContent(SystemUtils2018.clobToStringWindows(art.getContent()));
 		}
 		return list;
 	}
@@ -85,7 +83,7 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao{
 	@Override
 	public long getRecordCounts() {
 		long count = 0; // 必須使用 long 型態
-		String hql = "SELECT count(*) FROM Article";
+		String hql = "SELECT count(*) FROM ArticleBean";
 		Session session = factory.getCurrentSession();
 		List<Long> list = session.createQuery(hql).list();
 		if (list.size() > 0) {
@@ -101,67 +99,68 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao{
 	}
 
 	@Override
-	public Article getArticle() {
-		Article article = queryArticle(this.aId);
+	public ArticleBean getArticle() {
+		ArticleBean article = queryArticle(this.aId);
 		return article;
 	}
 
 	@Override
-	public int updateArticle(Article article, long sizeInBytes) {
+	public int updateArticle(ArticleBean article, long sizeInBytes) {
 		int n = 0;
 		Session session = factory.getCurrentSession();
-		if(article.getOssanbean() == null) {
+		if(article.getOssanBean() == null) {
 			OssanDao dao = new OssanDaoImpl_Hibernate();
-			OssanBean mob = dao.queryOssan(article.getOssanbean().getOssanNo());
-			article.setOssanbean(mob);
+			OssanBean mob = dao.queryOssan(article.getOssanBean().getOssanNo());
+			article.setOssanBean(mob);
 		}
 		session.merge(article);
 		n++;
 		return n;
 	}
 	@Override
-	public int updateArticle(Article article) {
+	public int updateArticle(ArticleBean article) {
 		int n = 0;
 		Session session = factory.getCurrentSession();
-		
-//		if(article.getOssanbean() == null) {
-//			OssanDao dao = new OssanDaoImpl_Hibernate();
-//			OssanBean mob = session.get(OssanBean.class, Integer.parseInt(article.getSeqNo()));
-//			String r = article.getSeqNo();
-//			OssanBean mob = dao.queryOssan(Integer.parseInt(r));
-//			article.setOssanbean(mob);
-//		}
-
 		session.update(article);
 		n++;
 		return n;
 	}
 
 	@Override
-	public Article queryArticle(int aId) {
-		Article article = null ;
+	public ArticleBean queryArticle(int aId) {
+		ArticleBean article = null ;
 		Session session = factory.getCurrentSession();
-		article = session.get(Article.class, aId);
+		article = session.get(ArticleBean.class, aId);
 		return article;
 	}
 	@Override
 	public int deleteArticle(int artNo) {
 		int n = 0;
 		Session session = factory.getCurrentSession();
-		Article art = new Article();
-		art.setArtNo(artNo);
+		ArticleBean art = new ArticleBean();
+		art.setArticleNo(artNo);
 		session.delete(art);
 		n++;
 		return n;
 	}
 
 	@Override
-	public int saveArticle(Article article) {
+	public int saveArticle(ArticleBean article) {
 		int n = 0;
 		Session session = factory.getCurrentSession();
-		OssanBean mob = session.get(OssanBean.class, Integer.parseInt(article.getSeqNo()));
-		article.setOssanbean(mob);
+//		OssanBean mob = session.get(OssanBean.class, Integer.parseInt(article.getA()));
+//		article.setOssanBean(mob);
 		session.save(article);
+		n++;
+		return n;
+	}
+	@Override
+	public int saveArticle(ArticleBean art, Integer seqNo) {
+		int n = 0;
+		Session session = factory.getCurrentSession();
+		OssanBean mob = session.get(OssanBean.class, seqNo);
+		art.setOssanBean(mob);
+		session.save(art);
 		n++;
 		return n;
 	}
@@ -180,7 +179,7 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao{
 	@Override
 	public long getRecordCounts(int seqNo) {
 		long count = 0; // 必須使用 long 型態
-		String hql = "SELECT count(*) FROM Article a WHERE a.ossanbean.ossanNo = :no";
+		String hql = "SELECT count(*) FROM ArticleBean a WHERE a.ossanBean.ossanNo = :no";
 		Session session = factory.getCurrentSession();
 		List<Long> list = session.createQuery(hql).setParameter("no", seqNo).list();
 		if (list.size() > 0) {
@@ -197,5 +196,7 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao{
 		 n = (long)session.createQuery(hql).setParameter("id", ossanId).uniqueResult();
 		return n;
 	}
+
+
 
 }

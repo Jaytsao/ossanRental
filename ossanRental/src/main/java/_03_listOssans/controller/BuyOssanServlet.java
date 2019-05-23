@@ -37,7 +37,7 @@ public class BuyOssanServlet extends HttpServlet {
 		String name 		= request.getParameter("name");
 		String nickname 	= request.getParameter("nickname");
 		String qtyStr 		= request.getParameter("qty");
-		Double price;
+		int price;
 		Double discount;
 		int qty = 0 ; 
 		int pKey = 0;
@@ -50,7 +50,7 @@ public class BuyOssanServlet extends HttpServlet {
 			throw new ServletException(e); 
 		}		
 		//暫時放一筆固定價格, Jay 20190503
-		price = (double) 300;
+		price = 300;
 		discount = (double) 1;		
 		// 將訂單資料封裝到OrderItem物件內
 		OrderItem oi = new OrderItem(pKey,email,name,nickname,qty,price,discount);

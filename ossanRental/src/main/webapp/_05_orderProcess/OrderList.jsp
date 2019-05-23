@@ -53,12 +53,12 @@
 		            <td>${aSingleOrder.orderDate}</td>
 		            <td>${aSingleOrder.totalAmount}</td>
 		            <td>${aSingleOrder.invoiceTitle}</td>
-		            <td>${aSingleOrder.tel}</td>
+		            <td>${aSingleOrder.phone}</td>
 		            <td>${aSingleOrder.email}</td>
-		            <td>${aSingleOrder.shippingAddress}</td>
+		            <td>${aSingleOrder.city}${aSingleOrder.district}${aSingleOrder.address}</td>
 		            <td>${aSingleOrder.bno}</td>
 		            <td>${aSingleOrder.comment}</td>    
-		            <td>${aSingleOrder.shippingDate}</td>
+		            <td>${aSingleOrder.deliverDate}</td>
 <%-- 		            <td>${aSingleOrder.cancelTag}</td> --%>
 		        </tr>
 			</c:forEach>

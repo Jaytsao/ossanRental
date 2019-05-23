@@ -5,7 +5,7 @@
 	<session-factory>
 		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.connection.password">Do!ng123</property>
+		<property name="hibernate.connection.password">0000</property>
 		
 <!-- 		準備給你們用的密碼區 -->
 <!-- 		<property name="hibernate.connection.password">Do!ng123</property> -->
@@ -33,11 +33,10 @@
 <!-- 	<mapping class="ch04.ex01.model.Member"></mapping> -->
 <!-- 		<mapping class="_01_register.model.MemberOssanBean"></mapping> -->
 		<mapping class="_03_listOssans.model.OssanBean"></mapping>
-<!-- 		<mapping class="_03_listOssans.model.OssanDescBean"></mapping> -->
-<!-- 		<mapping class="_03_listOssans.model.OssanAreaBean"></mapping> -->
-<!-- 		<mapping class="_04_ShoppingCart.model.OrderBean"></mapping> -->
-<!-- 		<mapping class="_04_ShoppingCart.model.OrderItemBean"></mapping> -->
-<!-- 		<mapping class="_06_article.model.Article"></mapping> -->
+		<mapping class="_04_ShoppingCart.model.OrderItemBean"></mapping>
+		<mapping class="_04_ShoppingCart.model.OrderBean"></mapping>
+		<mapping class="_06_article.model.ArticleBean"></mapping>
+
 
 
 	</session-factory>

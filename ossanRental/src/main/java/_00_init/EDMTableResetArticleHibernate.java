@@ -69,6 +69,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -78,7 +79,7 @@ import _00_init.util.DBService;
 import _00_init.util.HibernateUtils;
 import _00_init.util.SystemUtils2018;
 import _03_listOssans.model.OssanBean;
-import _06_article.model.Article;
+import _06_article.model.ArticleBean;
 
  
 public class EDMTableResetArticleHibernate {
@@ -87,29 +88,29 @@ public class EDMTableResetArticleHibernate {
 
 	public static void main(String args[]) {
 		
-		//JDBC 砍表
-		try (
-				Connection con = DriverManager.getConnection(
-									DBService.getDbUrl(), 
-									DBService.getUser(),
-									DBService.getPassword()); 
-				Statement stmt = con.createStatement();
-			) {			
-				//6.article表格
-				stmt.executeUpdate(DBService.getDropArticle());
-				System.out.println("Article表格刪除成功");
-			//	stmt.executeUpdate(DBService.getCreateArticle());
-			//	System.out.println("Article表格產生成功");
-				
-			} catch (SQLException e) {
-				System.err.println("新建表格時發生SQL例外: " + e.getMessage());
-				e.printStackTrace();
-			}
-		
-		
+//		//JDBC 砍表
+//		try (
+//				Connection con = DriverManager.getConnection(
+//									DBService.getDbUrl(), 
+//									DBService.getUser(),
+//									DBService.getPassword()); 
+//				Statement stmt = con.createStatement();
+//			) {			
+//				//6.article表格
+//				stmt.executeUpdate(DBService.getDropArticle());
+//				System.out.println("Article表格刪除成功");
+//
+//				
+//			} catch (SQLException e) {
+//				System.err.println("新建表格時發生SQL例外: " + e.getMessage());
+//				e.printStackTrace();
+//			}
+//		
+//		
 		
 		//Hibernate方法開始
 				String line = "";
+				Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
 				int n = 1;
 				SessionFactory factory = HibernateUtils.getSessionFactory();
 				Session session = factory.getCurrentSession();
@@ -132,16 +133,15 @@ public class EDMTableResetArticleHibernate {
 								line = line.substring(1);
 							}
 							String[] token = line.split("\\|");
-							Article ossanArticle = new Article();
+							ArticleBean ossanArticle = new ArticleBean();
+							ossanArticle.setUpdateTime(ts);
 							ossanArticle.setTitle(token[0]);
-							ossanArticle.setArticle(SystemUtils2018.fileToClob(token[1]));
-							ossanArticle.setArticleImage(SystemUtils2018.fileToBlob(token[3]));
-		//					ossanArticle.setSeqNo(token[2]);
-							
+							ossanArticle.setContent(SystemUtils2018.fileToClob(token[1]));
+							ossanArticle.setArticleImage(SystemUtils2018.fileToBlob(token[3]));							
 							OssanBean ob = session.get(OssanBean.class, Integer.parseInt(token[2]));
 							
 							
-							ossanArticle.setOssanbean(ob);
+							ossanArticle.setOssanBean(ob);
 							
 
 							session.save(ossanArticle);

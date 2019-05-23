@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import _03_listOssans.model.OssanBean;
 import _03_listOssans.service.OssanService;
 import _03_listOssans.service.impl.OssanServiceImplHibernate;
+import _06_article.model.ArticleBean;
+import _06_article.service.imp.ArticleServiceImpl;
 
 @WebServlet("/_00_init/getImage")
 public class RetrieveImageServlet extends HttpServlet {
@@ -50,19 +52,20 @@ public class RetrieveImageServlet extends HttpServlet {
 						fileName = bean1.getFileName();
 					}
 					break;
-//				case "ARTICLE":
-//					ArticleServiceImpl articleService = new ArticleServiceImpl();
-//					int aId = 0 ;
-//					aId = Integer.parseInt(ossanNo);
-//					Article article = articleService.getArticle(aId);
-//					if (article != null) {
-//						blob = article.getArticleImage();
-//						if (blob != null) { 
-//							is = blob.getBinaryStream();
-//						}
-//						fileName = article.getFileName();
-//					}
-//					break;
+				case "ARTICLE":
+					System.out.println(ossanNo);
+					ArticleServiceImpl articleService = new ArticleServiceImpl();
+					int aId = 0 ;
+					aId = Integer.parseInt(ossanNo);
+					ArticleBean article = articleService.getArticle(aId);
+					if (article != null) {
+						blob = article.getArticleImage();
+						if (blob != null) { 
+							is = blob.getBinaryStream();
+						}
+						fileName = article.getFileName();
+					}
+					break;
 			}				
 
 			// 如果圖片的來源有問題，就送回預設圖片(/images/NoImage.png)	

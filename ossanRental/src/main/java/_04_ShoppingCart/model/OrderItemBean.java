@@ -3,6 +3,8 @@ package _04_ShoppingCart.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,10 +15,10 @@ public class OrderItemBean implements Serializable{
 	private Integer seqNo;
 	private int quantity;
 	private int unitPrice;
-	private double discount;
-	private OssanBean ossanBean = new OssanBean();
-	private OrderBean orderBean = new OrderBean();
-	public OrderItemBean(Integer seqNo, int quantity, int unitPrice, double discount) {
+	private Double discount;
+	private OssanBean ossanBean ;
+	private OrderBean orderBean ;
+	public OrderItemBean(Integer seqNo, int quantity, int unitPrice, Double discount) {
 		super();
 		this.seqNo = seqNo;
 		this.quantity = quantity;
@@ -26,6 +28,7 @@ public class OrderItemBean implements Serializable{
 	public OrderItemBean() {}
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getSeqNo() {
 		return seqNo;
 	}
@@ -44,10 +47,10 @@ public class OrderItemBean implements Serializable{
 	public void setUnitPrice(int unitPrice) {
 		this.unitPrice = unitPrice;
 	}
-	public double getDiscount() {
+	public Double getDiscount() {
 		return discount;
 	}
-	public void setDiscount(double discount) {
+	public void setDiscount(Double discount) {
 		this.discount = discount;
 	}
 	@ManyToOne

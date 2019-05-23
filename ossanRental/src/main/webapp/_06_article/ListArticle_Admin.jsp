@@ -44,14 +44,14 @@ function deleteArticle(n) {
 	    <tbody>
 	    <c:forEach varStatus="stVar"  var="aOssanBean"  items="${products_DPP}" >
 	        <tr>
-	            <td>${aOssanBean.seqNo}</td>
+	            <td>${aOssanBean.ossanBean.ossanNo}</td>
 	            <td> <img width='100' height='100'
-     src='${pageContext.servletContext.contextPath}/_00_init/getImage?id=${aOssanBean.artNo}&type=article'></td>
+     src='${pageContext.servletContext.contextPath}/_00_init/getImage?id=${aOssanBean.articleNo}&type=article'></td>
      			<td>${aOssanBean.title}</td>
-	            <td id="sArticle" width="200">${aOssanBean.sArticle}</td>
+	            <td id="sArticle" width="200">${aOssanBean.sContent}</td>
 	            <td width="100">${aOssanBean.updateTime}</td>
 	            <td>
-	           		 <button name="delete" type="submit" style="width:100px" onclick="deleteArticle(${aOssanBean.artNo})" class="pure-button pure-input-1-2 pure-button-primary">刪除</button>
+	           		 <button name="delete" type="submit" style="width:100px" onclick="deleteArticle(${aOssanBean.articleNo})" class="pure-button pure-input-1-2 pure-button-primary">刪除</button>
 	            </td>
 	        </tr>
 	     </c:forEach>

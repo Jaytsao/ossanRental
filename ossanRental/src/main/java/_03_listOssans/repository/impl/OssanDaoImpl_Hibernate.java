@@ -15,6 +15,7 @@ import _00_init.util.HibernateUtils;
 import _00_init.util.SystemUtils2018;
 import _03_listOssans.model.OssanBean;
 import _03_listOssans.repository.OssanDao;
+import _06_article.model.ArticleBean;
 
 // 本類別使用純JDBC的技術來存取資料庫。
 // 所有SQLException都以catch區塊捕捉，然後一律再次丟出RuntimeException。

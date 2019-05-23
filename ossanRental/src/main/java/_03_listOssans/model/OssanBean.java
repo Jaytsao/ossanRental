@@ -5,16 +5,20 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import _06_article.model.ArticleBean;
+
 @Entity
-@Table(name="ossan")
+
 public class OssanBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -46,9 +50,18 @@ public class OssanBean implements Serializable {
 	private boolean twOther;
 	
 	private String privilege;
+	private Set<ArticleBean> articleBean;
 	
 	
-	
+	@OneToMany(mappedBy="ossanBean",cascade=CascadeType.ALL)
+	public Set<ArticleBean> getArticleBean() {
+		return articleBean;
+	}
+
+	public void setArticleBean(Set<ArticleBean> articleBean) {
+		this.articleBean = articleBean;
+	}
+
 	public OssanBean(int ossanNo, String quote, Clob intro) {
 		this.ossanNo = ossanNo;
 		this.quote = quote;
@@ -282,11 +295,5 @@ public class OssanBean implements Serializable {
 
 	public void setPrivilege(String privilege) {
 		this.privilege = privilege;
-	}
-	
-	
-
-	
-	
-	
+	}	
 }

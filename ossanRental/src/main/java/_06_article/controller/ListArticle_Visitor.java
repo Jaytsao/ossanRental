@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import _06_article.model.Article;
+import _06_article.model.ArticleBean;
 import _06_article.service.ArticleService;
 import _06_article.service.imp.ArticleServiceImpl;
 
@@ -41,7 +41,7 @@ public class ListArticle_Visitor extends HttpServlet {
 		// 讀取一頁的文章資料之前，告訴service，現在要讀哪一頁
 		service.setPageNo(pageNo_li);
 		// service.getPageArticles()方法開始讀取一頁的文章
-		Collection<Article> coll = service.getPageArticles();
+		Collection<ArticleBean> coll = service.getPageArticles();
 		request.setAttribute("pageNo_li", pageNo_li);
 		request.setAttribute("totalPages_li", service.getTotalPages());
 		// 將讀到的一頁資料放入request物件內，成為它的屬性物件

@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import _00_init.util.HibernateUtils;
-import _06_article.model.Article;
+import _06_article.model.ArticleBean;
 import _06_article.repository.ArticleDao;
 import _06_article.repository.imp.ArticleDaoImpl_Hibernate;
 import _06_article.service.ArticleService;
@@ -59,8 +59,8 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	public List<Article> getPageArticles( int ossanId) {
-		List<Article> list = null;
+	public List<ArticleBean> getPageArticles( int ossanId) {
+		List<ArticleBean> list = null;
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
 		try {
@@ -77,8 +77,8 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 	//for visitor and admin
 	@Override
-	public List<Article> getPageArticles() {
-		List<Article> list = null ;
+	public List<ArticleBean> getPageArticles() {
+		List<ArticleBean> list = null ;
 		Session session = factory.getCurrentSession();
 		Transaction tx = null ;
 		try {
@@ -103,7 +103,7 @@ public class ArticleServiceImpl implements ArticleService{
 	
 
 	@Override
-	public int updateArticle(Article article, long sizeInBytes) {
+	public int updateArticle(ArticleBean article, long sizeInBytes) {
 		int n = 0;
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
@@ -121,7 +121,7 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	public int updateArticle(Article article) {
+	public int updateArticle(ArticleBean article) {
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;
 		int n = 0;
@@ -157,7 +157,7 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	public int saveArticle(Article article) {
+	public int saveArticle(ArticleBean article) {
 		Session session = factory.getCurrentSession();
 		int n = 0;
 		Transaction tx = null ;
@@ -173,15 +173,35 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 		return n ;
 	}
-
-	public Article getArticle(int aId) {
-		dao.setArticleId(aId);
+	@Override
+	public int saveArticle(ArticleBean art, Integer seqNo) {
 		Session session = factory.getCurrentSession();
-		Article article = null;
+		int n = 0;
+		Transaction tx = null ;
+		try {
+			tx = session.beginTransaction();
+			n = dao.saveArticle(art,seqNo);
+			tx.commit();
+		}catch (Exception e) {
+			if(tx != null)
+				tx.rollback();
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		return n ;
+	}
+	
+
+	public ArticleBean getArticle(int aId) {
+//		dao.setArticleId(aId);
+		Session session = factory.getCurrentSession();
+		ArticleBean article = null;
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			article = dao.getArticle();
+//			article = dao.getArticle();
+			article = dao.queryArticle(aId);
+			
 			tx.commit();
 		}catch (Exception e) {
 			if(tx != null)
@@ -209,5 +229,7 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 		return n ;
 	}
+
+
 
 }

@@ -49,9 +49,9 @@ function modifyArticle(n) {
 			<form class="pure-form" action="<c:url value='updateArticle'/>" method="post" enctype="multipart/form-data">
 			    <fieldset class="pure-group">
 			       <input type="text" name="title" value="${article.title}" class="pure-input-1-2" style="width: 400px ; height: 40px ; margin-bottom: 10px" required="required">
-			       <textarea  class="pure-input-1-2" name="article"  style="width: 400px ; height: 300px" required="required">${article.sArticle}</textarea>
+			       <textarea  class="pure-input-1-2" name="article"  style="width: 400px ; height: 300px" required="required">${article.sContent}</textarea>
 			    </fieldset>
-			    <input type="hidden" name="artNo" value="${article.artNo}">
+			    <input type="hidden" name="artNo" value="${article.articleNo}">
 				上傳圖片: <input class="pure-input-1-2"  style="width: 400px; margin-bottom: 10px" type="file" name="ImageFile" >
 			    <button type="submit" style="width: 400px" class="pure-button pure-input-1-2 pure-button-primary">編輯完成</button>
 			</form>
@@ -75,14 +75,13 @@ function modifyArticle(n) {
 					        	<tr>
 					        	
 						            <td>${stVar.index + 3*pageNo_up - 2}</td>
-						            <td> <img width='100' height='100'
-					     src='${pageContext.servletContext.contextPath}/_00_init/getImage?id=${aOssanBean.artNo}&type=article'></td>
+						            <td> <img width='100' height='100'src='${pageContext.servletContext.contextPath}/_00_init/getImage?id=${aOssanBean.articleNo}&type=article'></td>
 						            <td>${aOssanBean.title}</td>
-						            <td id = "sArticle" width="200">${aOssanBean.sArticle}</td>
+						            <td id = "sArticle" width="200">${aOssanBean.sContent}</td>
 						            <td width="100">${aOssanBean.updateTime}</td>
 						            <td>
-							            <button type="submit" name="modify" onclick="modifyArticle(${aOssanBean.artNo})" style="width: 55px" class="pure-button pure-input-1-2 pure-button-primary">編輯</button>
-							            <button type="submit" name="delete" onclick="deleteArticle(${aOssanBean.artNo})" style="width: 55px" class="pure-button pure-input-1-2 pure-button-primary">刪除</button>
+							            <button type="submit" name="modify" onclick="modifyArticle(${aOssanBean.articleNo})" style="width: 55px" class="pure-button pure-input-1-2 pure-button-primary">編輯</button>
+							            <button type="submit" name="delete" onclick="deleteArticle(${aOssanBean.articleNo})" style="width: 55px" class="pure-button pure-input-1-2 pure-button-primary">刪除</button>
 						            </td>
 					        	</tr>
 				     		</c:forEach>
@@ -123,7 +122,7 @@ function modifyArticle(n) {
 					</table>
 				</div>
 			<div style="position:absolute; top:100px ; left: 950px">
-				<form class="pure-form" action="<c:url value='updateArticle'/>" method="post" enctype="multipart/form-data">
+				<form class="pure-form" action="<c:url value='InsertArticle.do'/>" method="post" enctype="multipart/form-data">
 				
 				    <fieldset class="pure-group">
 				       <input type="text" name="title" class="pure-input-1-2" style="width: 300px ; height: 40px ; margin-bottom: 10px"  placeholder="標題" required="required">

@@ -58,7 +58,7 @@ public class OrderDaoImpl_Hibernate implements OrderDao {
 	public List<OrderItemBean> getOssanOrders(int ossanNo) {
 		List<OrderItemBean> list = null;
 		Session session = factory.getCurrentSession();
-		String hql = "FROM OrderItemBean oib WHERE oib.pKey = :mid";
+		String hql = "FROM OrderItemBean oib WHERE oib.seqNo = :mid";
 		list = session.createQuery(hql).setParameter("mid", ossanNo).list();
 		return list;
 	}

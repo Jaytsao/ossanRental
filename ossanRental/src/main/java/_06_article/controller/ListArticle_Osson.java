@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import _03_listOssans.model.OssanBean;
-import _06_article.model.Article;
+import _06_article.model.ArticleBean;
 import _06_article.service.ArticleService;
 import _06_article.service.imp.ArticleServiceImpl;
 
@@ -38,7 +38,7 @@ public class ListArticle_Osson extends HttpServlet {
 		OssanBean mob = (OssanBean) session.getAttribute("LoginOK");
 		ArticleService service = new ArticleServiceImpl(); 
 		// 取出使用者的memberId，後面的Cookie會用到 
-		String memberId = mob.getOssanId();
+		String memberId = String.valueOf(mob.getOssanNo());
 		int seqNo = mob.getOssanNo();
 		// 讀取瀏覽送來的 pageNo
 		String pageNoStr = request.getParameter("pageNo_up");
@@ -71,7 +71,7 @@ public class ListArticle_Osson extends HttpServlet {
 		// 讀取一頁的文章資料之前，告訴service，現在要讀哪一頁
 		service.setPageNo(pageNo_up);
 		// service.getPageArticles()方法開始讀取一頁的文章
-		Collection<Article> coll = service.getPageArticles(seqNo);
+		Collection<ArticleBean> coll = service.getPageArticles(seqNo);
 		
 		session.setAttribute("pageNo_up", pageNo_up);
 		request.setAttribute("totalPages_up", service.getTotalPages(seqNo)); //個人頁面的文章數

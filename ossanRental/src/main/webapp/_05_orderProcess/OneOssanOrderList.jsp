@@ -41,7 +41,7 @@
 	    <tbody>
 	    	<c:forEach varStatus="stVar"  var="aSingleOrder"  items="${allOrders}" >
 		        <tr style="height:20px">
-		            <td>${aSingleOrder.seqno}</td>
+		            <td>${aSingleOrder.seqNo}</td>
 		            
 		            <td>${aSingleOrder.orderBean.orderNo}</td>
 		            <td>${aSingleOrder.orderBean.orderDate}</td>
@@ -49,9 +49,9 @@
 		            <td>${aSingleOrder.orderBean.totalAmount}</td>
 		            
 		            <td>${aSingleOrder.orderBean.invoiceTitle}</td>
-		            <td>${aSingleOrder.orderBean.tel}</td>
+		            <td>${aSingleOrder.orderBean.phone}</td>
 		            <td>${aSingleOrder.orderBean.email}</td>
-		            <td>${aSingleOrder.orderBean.shippingAddress}</td>
+		            <td>${aSingleOrder.orderBean.city}${aSingleOrder.orderBean.district}${aSingleOrder.orderBean.address}</td>
 		            <td>${aSingleOrder.orderBean.comment}</td>    
 		
 		        </tr>

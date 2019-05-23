@@ -23,7 +23,7 @@
 				     <li class="pure-menu-item pure-menu-selected"><a href="<c:url value='/_04_ShoppingCart/ShowCartContent.jsp' />" class="pure-menu-link">購物結帳</a></li>
 				     <li class="pure-menu-item pure-menu-selected"><a href="<c:url value='/_01_register/register.jsp' />" class="pure-menu-link">大叔註冊</a></li>
 				     <li class="pure-menu-item pure-menu-selected"><a href="<c:url value='/_02_login/login.jsp' />" class="pure-menu-link">大叔登入</a></li>
-				     <li class="pure-menu-item pure-menu-selected"><a href="/eOssan/index.jsp" class="pure-menu-link">回Index</a></li>
+				     <li class="pure-menu-item pure-menu-selected"><a href="/ossanRental/index.jsp" class="pure-menu-link">回Index</a></li>
 				     <li class="pure-menu-item pure-menu-selected" ><small>Session ID → ${pageContext.session.id }</small></li>
 			     
 				</ul>
@@ -48,7 +48,7 @@
 				     <li class="pure-menu-item pure-menu-selected"><a href="<c:url value='/_05_orderProcess/oneOssanOrderList.do' />" class="pure-menu-link">個人交易紀錄</a></li>
 				     <li class="pure-menu-item pure-menu-selected"><a href="<c:url value='/_02_login/logout.jsp' />" class="pure-menu-link">大叔登出</a></li>
 				   
-				     <li class="pure-menu-item pure-menu-selected"><a href="/eOssan/index.jsp" class="pure-menu-link">回Index</a></li>
+				     <li class="pure-menu-item pure-menu-selected"><a href="/ossanRental/index.jsp" class="pure-menu-link">回Index</a></li>
 				     <li class="pure-menu-item pure-menu-selected" ><small>Session ID → ${pageContext.session.id }</small></li> 		     
 				</ul>
 			</div>
@@ -70,7 +70,7 @@
 				     <li class="pure-menu-item pure-menu-selected"><a href="<c:url value='/_05_orderProcess/orderList.do' />" class="pure-menu-link">全部交易紀錄</a></li>
 				     <li class="pure-menu-item pure-menu-selected"><a href="<c:url value='/_02_login/logout.jsp' />" class="pure-menu-link">管理員登出</a></li>
 				  	 
-				     <li class="pure-menu-item pure-menu-selected"><a href="/eOssan/index.jsp" class="pure-menu-link">回Index</a></li>
+				     <li class="pure-menu-item pure-menu-selected"><a href="/ossanRental/index.jsp" class="pure-menu-link">回Index</a></li>
 				     <li class="pure-menu-item pure-menu-selected" ><small>Session ID → ${pageContext.session.id }</small></li> 	    
 				</ul>
 			</div>

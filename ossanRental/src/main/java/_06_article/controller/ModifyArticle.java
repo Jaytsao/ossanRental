@@ -3,7 +3,6 @@ package _06_article.controller;
 
 import java.io.IOException;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import _00_init.util.SystemUtils2018;
-import _06_article.model.Article;
+import _06_article.model.ArticleBean;
 import _06_article.service.ArticleService;
 import _06_article.service.imp.ArticleServiceImpl;
 //本控制器負責大叔文章的刪除及編輯
@@ -37,8 +36,8 @@ public class ModifyArticle extends HttpServlet {
 			return;
 		}else if(cmd.equalsIgnoreCase("mod")) {
 //			將要編輯的內容放到原本發文的留言板裡
-			Article art = service.getArticle(artNo);
-			art.setsArticle(SystemUtils2018.clobToStringWindows(art.getArticle()));
+			ArticleBean art = service.getArticle(artNo);
+			art.setsContent(SystemUtils2018.clobToStringWindows(art.getContent()));
 			session.setAttribute("article", art);
 		}
 		response.sendRedirect(response.encodeRedirectURL("PersonalArticle.jsp"));

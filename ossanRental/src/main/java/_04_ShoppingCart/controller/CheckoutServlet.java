@@ -23,8 +23,7 @@ public class CheckoutServlet extends HttpServlet {
 		if (session == null) {      // 使用逾時
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 			return;
-		}
-		
+		}	
 		
 		ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");
 		if (sc == null) {

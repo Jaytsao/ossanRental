@@ -29,9 +29,9 @@
 	        <tr>
 	            <td>${aOssanBean.seqNo}</td>
 	            <td> <img width='100' height='100'
-     src='${pageContext.servletContext.contextPath}/_00_init/getImage?id=${aOssanBean.artNo}&type=article'></td>
+     src='${pageContext.servletContext.contextPath}/_00_init/getImage?id=${aOssanBean.articleNo}&type=article'></td>
      			<td>${aOssanBean.title}</td>
-	            <td>${aOssanBean.sArticle}</td>
+	            <td>${aOssanBean.sContent}</td>
 	            <td width="100">${aOssanBean.updateTime}</td>
 	        </tr>
 	     </c:forEach>

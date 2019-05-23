@@ -1,8 +1,5 @@
 package _06_article.controller;
 
-import java.io.File;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -23,7 +20,7 @@ import javax.servlet.http.Part;
 import _00_init.util.GlobalService;
 import _00_init.util.SystemUtils2018;
 import _03_listOssans.model.OssanBean;
-import _06_article.model.Article;
+import _06_article.model.ArticleBean;
 import _06_article.service.ArticleService;
 import _06_article.service.imp.ArticleServiceImpl;
 //要用HTTP multipart request 就必須設定下面這行
@@ -42,8 +39,6 @@ public class UpdateArticle extends HttpServlet {
 		ArticleService service = new ArticleServiceImpl();
 		
 		OssanBean mob = (OssanBean) session.getAttribute("LoginOK");
-//		讀取是哪位大叔發文的
-		String seqNo = String.valueOf(mob.getOssanNo());
 //		要編輯文章才會用到文章編號
 		String artNo = request.getParameter("artNo");
 		String title = "";
@@ -51,6 +46,7 @@ public class UpdateArticle extends HttpServlet {
 		String fileName = "";
 		long sizeInBytes = 0;
 		InputStream is = null;
+		Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
 		// 取出HTTP multipart request內所有的parts
 		Collection<Part> arc_Parts = request.getParts();
 		GlobalService.exploreParts(arc_Parts, request);
@@ -59,7 +55,6 @@ public class UpdateArticle extends HttpServlet {
 			for (Part p : arc_Parts) {
 				String fldName = p.getName();
 				String value = request.getParameter(fldName);
-
 				// 1. 讀取使用者輸入資料
 				if (p.getContentType() == null) {
 					if (fldName.equals("title")) {
@@ -73,25 +68,19 @@ public class UpdateArticle extends HttpServlet {
 					// 調整圖片檔檔名的長度，需要檔名中的附檔名，所以調整主檔名以免檔名太長無法寫入表格
 					fileName = GlobalService.adjustFileName(fileName, GlobalService.IMAGE_FILENAME_LENGTH);
 //					發新文章有上傳圖片跑這行
-					if (fileName != null && fileName.trim().length() > 0 && artNo == null) {
-						sizeInBytes = p.getSize();
-						is = p.getInputStream();
-//					編輯舊文章要更新圖片跑這行
-					}else if(fileName != null && fileName.trim().length() > 0) {
-//						System.out.println(fileName);
+					if(fileName != null && fileName.trim().length() > 0) {
 						sizeInBytes = p.getSize();
 						is = p.getInputStream();
 						try {
 							Blob blob = SystemUtils2018.fileToBlob(is, sizeInBytes);
-							Article artUpdate = new Article() ;
-							//Jay:加入這一行，把Ossan值帶給這個Article
-							artUpdate.setOssanbean(mob);
-							
-							artUpdate.setsArticle(article);
-							artUpdate.setArtNo(Integer.parseInt(artNo));
-							artUpdate.setTitle(title);
-							artUpdate.setArticleImage(blob);
-							service.updateArticle(artUpdate, sizeInBytes);
+							Clob clob = SystemUtils2018.stringToClob(article);
+							ArticleBean articleBean = service.getArticle(Integer.parseInt(artNo));
+							articleBean.setsContent(article);
+							articleBean.setContent(clob);
+							articleBean.setTitle(title);
+							articleBean.setArticleImage(blob);
+							articleBean.setUpdateTime(ts);
+							service.updateArticle(articleBean);
 							session.setAttribute("article", null);
 							response.sendRedirect(response.encodeRedirectURL("listArticle"));
 							return;
@@ -99,45 +88,27 @@ public class UpdateArticle extends HttpServlet {
 							e.printStackTrace();
 						}
 //					編輯舊文章不更新圖片跑這行
-					}else if(artNo != null && artNo.trim().length() > 0){
-						Article artUpdate = new Article() ;
-						//Jay:加入這一行，把Ossan值帶給這個Article
-						artUpdate.setOssanbean(mob);
-						
-						artUpdate.setsArticle(article);
-						artUpdate.setArtNo(Integer.parseInt(artNo));
-						artUpdate.setTitle(title);
-						service.updateArticle(artUpdate);
-						session.setAttribute("article", null);
-						response.sendRedirect(response.encodeRedirectURL("listArticle"));
-						return ;
-//					發新文章不上傳圖片跑這行
-					}else {
-						File f = new File("C:\\_JSP\\eclipse-workspaceJDBC\\ossanRental\\data\\images\\null.jpg");
-						sizeInBytes = f.length();
-						is = new FileInputStream(f);
+					}else if(artNo != null && artNo.trim().length() > 0){													
+							ArticleBean articleBean = service.getArticle(Integer.parseInt(artNo));
+							try {								
+								Clob clob = SystemUtils2018.stringToClob(article);
+								articleBean.setContent(clob);
+								articleBean.setsContent(article);
+								articleBean.setTitle(title);
+								articleBean.setUpdateTime(ts);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+							service.updateArticle(articleBean);
+							session.setAttribute("article", null);
+							response.sendRedirect(response.encodeRedirectURL("listArticle"));
+							return ;
 					}
+
 				}
 			}
-
-		try {
-		
-				Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
-				Blob blob = SystemUtils2018.fileToBlob(is, sizeInBytes);
-				
-				Clob clob = SystemUtils2018.stringToClob(article);
-				// 將所有文章資料封裝到Article物件
-				Article art = new Article(title, ts, blob, clob, seqNo, fileName, article);
-
-				// 呼叫ArticleDao的saveArticle方法
-				int n = service.saveArticle(art);
-				if (n == 1) {
-					response.sendRedirect("listArticle");
-					return;
-				} 
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
+		response.sendRedirect("listArticle");
+		return;
 		}
 	}
 }

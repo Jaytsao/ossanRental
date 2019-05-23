@@ -6,11 +6,11 @@ public class OrderItem {
 	String name;
 	String nickname;
 	int qty = 0 ; 	
-	Double price = 0.0 ; 
+	int price = 0 ; 
 	Double discount = 1.0 ;	
 	public OrderItem() {
 	}
-	public OrderItem(int pkey, String memberId, String name, String nickname, int qty, Double price, Double discount) {
+	public OrderItem(int pkey, String memberId, String name, String nickname, int qty, int price, Double discount) {
 
 		this.pkey = pkey;
 		this.memberId = memberId;
@@ -64,11 +64,11 @@ public class OrderItem {
 		this.qty = qty;
 	}
 
-	public Double getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 

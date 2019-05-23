@@ -1,6 +1,7 @@
 package _04_ShoppingCart.controller;
 import java.io.IOException;
-import java.util.Date;
+import java.security.Timestamp;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -38,11 +39,6 @@ public class ProcessOrderServlet extends HttpServlet {
 			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp"  );
 			return;
 		}
-//		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
-//		if (mb == null) {
-//			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp"  );
-//			return;
-//		}
 		ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");
 		if (sc == null) {
 			// 處理訂單時如果找不到購物車(通常是Session逾時)，沒有必要往下執行
@@ -57,18 +53,30 @@ public class ProcessOrderServlet extends HttpServlet {
 			return;  			// 一定要記得 return 
 		}
 
-		double totalAmount = Math.round(sc.getSubtotal() * 1.05);  	// 計算訂單總金額 
+//		double totalAmount = Math.round(sc.getSubtotal() * 1.05); // 計算訂單總金額 
+		int totalAmount = (int) sc.getSubtotal();
 		String shippingAddress = request.getParameter("address");  // 出貨地址
 		String bNO = request.getParameter("BNO");					// 發票的統一編號  
 		String invoiceTitle = request.getParameter("invoiceTitle");	// 發票的抬頭
 		String tel = request.getParameter("tel");	
 		String email = request.getParameter("email");	
 		String comment = request.getParameter("comment");
+		//====================================================
+		Integer orderNo = null;
+		String city = request.getParameter("city");
+		String district = request.getParameter("district");
+		String address = request.getParameter("address");
+		java.sql.Timestamp orderDate = new java.sql.Timestamp(System.currentTimeMillis());
+		Date deliverDate = null;
+		String cancelTag = null;
+		Integer seqNo = null;
+		//=============================================================
 		
-		Date today = new Date();   									// 新增訂單的時間
+//		Date today = new Date(); 	// 新增訂單的時間
+		
+		//=============================================================
 		// 新建訂單物件。OrderBean:封裝一筆訂單資料的容器，包含訂單主檔與訂單明細檔的資料。目前只存放訂單主檔的資料。
-		OrderBean ob = new OrderBean(null, today, invoiceTitle, tel, email,
-				bNO, shippingAddress, comment, totalAmount, null,null,null);
+		OrderBean ob = new OrderBean(orderNo, invoiceTitle, bNO,tel,email,city,district,address,orderDate,deliverDate,cancelTag,totalAmount,comment);
 		// 新建一個存放訂單明細的Set物件: items		
 		
 		Set<OrderItemBean> items = new HashSet<OrderItemBean>();
@@ -88,8 +96,7 @@ public class ProcessOrderServlet extends HttpServlet {
 //			                     oi.getTitle() ;
 			// 由於表格的Primary Key為自動遞增，為了配合Hibernate，在此主鍵設定為null
 			// (Hibernate規定：自動遞增的主鍵，其對應之物件的欄位必須是null)，絕對不可以是零。
-			OrderItemBean oib = new OrderItemBean(null, 0, oi.getPkey(), oi.getQty(), 
-										oi.getPrice(), oi.getDiscount());
+			OrderItemBean oib = new OrderItemBean(seqNo, oi.getQty(),oi.getPrice(),oi.getDiscount());
 			//Jay:這邊的方法也不好,OrderNo的值是另外放進去的
 			OssanService serviceHibernate = new OssanServiceImplHibernate();
 			OssanBean bb = serviceHibernate.queryOssan(oi.getPkey());
@@ -99,7 +106,7 @@ public class ProcessOrderServlet extends HttpServlet {
 			items.add(oib);
 		}
 		// 執行到此，購物車內所有購買的商品已經全部轉換為為OrderItemBean物件，並放在Items內
-		ob.setItems(items);  
+		ob.setOrderItemBean(items);  
 		try {
 			OrderService orderServiceHibernate = new OrderServiceImplHibernate();
 			orderServiceHibernate.persistOrder(ob);

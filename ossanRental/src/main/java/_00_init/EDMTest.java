@@ -1,10 +1,5 @@
 package _00_init;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.Query;
-
 /*  
     程式說明：建立表格與設定初始測試資料。
     表格包括：Book, BookCompany, Member, Orders, OrderItems
@@ -15,13 +10,9 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+
 import _00_init.util.HibernateUtils;
-import _00_init.util.SystemUtils2018;
-import _03_listOssans.model.OssanAreaBean;
 import _03_listOssans.model.OssanBean;
-import _03_listOssans.model.OssanDescBean;
-import _06_article.model.Article;
-import _06_article.repository.imp.MemberOssanBean;
 
 public class EDMTest {
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元

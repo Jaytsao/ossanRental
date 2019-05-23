@@ -8,15 +8,13 @@ package _00_init;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.Timestamp;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import _00_init.util.DBService;
+
 import _00_init.util.GlobalService;
 import _00_init.util.HibernateUtils;
 import _00_init.util.RandomDates;
@@ -29,28 +27,29 @@ public class EDMTableResetHibernate {
 	public static void main(String args[]) {
 		
 	//這邊暫時還是用舊方法刪除表格
-		try (
-				Connection con = DriverManager.getConnection(
-									DBService.getDbUrl(), 
-									DBService.getUser(),
-									DBService.getPassword()); 
-				Statement stmt = con.createStatement();
-			) {
-
-				stmt.executeUpdate(DBService.getDropOrderItemBean());
-				System.out.println("OrderItemBean表格刪除成功");
-				stmt.executeUpdate(DBService.getDropOrderBean());
-				System.out.println("OrderBean表格刪除成功");
-				stmt.executeUpdate(DBService.getDropOssan());
-				System.out.println("Ossan表格刪除成功");
-			
-			} catch (SQLException e) {
-				System.err.println("刪除表格時發生SQL例外: " + e.getMessage());
-				e.printStackTrace();
-			}
+//		try (
+//				Connection con = DriverManager.getConnection(
+//									DBService.getDbUrl(), 
+//									DBService.getUser(),
+//									DBService.getPassword()); 
+//				Statement stmt = con.createStatement();
+//			) {
+//
+//				stmt.executeUpdate(DBService.getDropOrderItemBean());
+//				System.out.println("OrderItemBean表格刪除成功");
+//				stmt.executeUpdate(DBService.getDropOrderBean());
+//				System.out.println("OrderBean表格刪除成功");
+//				stmt.executeUpdate(DBService.getDropOssan());
+//				System.out.println("Ossan表格刪除成功");
+//			
+//			} catch (SQLException e) {
+//				System.err.println("刪除表格時發生SQL例外: " + e.getMessage());
+//				e.printStackTrace();
+//			}
 		
 		//Hibernate方法開始
 		String line = "";
+		Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 		Session session = factory.getCurrentSession();
 		Transaction tx = null;

@@ -7,7 +7,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.abc</groupId>
-	<artifactId>eOssan</artifactId>
+	<artifactId>ossanRental</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>eDMoee Web App</name>
@@ -118,7 +118,7 @@
 
 	</dependencies>
 	<build>
-		<finalName>eOssan</finalName>
+		<finalName>ossanRental</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

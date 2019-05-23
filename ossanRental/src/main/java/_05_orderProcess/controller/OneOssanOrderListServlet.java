@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import _03_listOssans.model.OssanBean;
 import _04_ShoppingCart.model.OrderItemBean;
 import _04_ShoppingCart.model.service.OrderService;
 import _04_ShoppingCart.model.service.impl.OrderServiceImplHibernate;
@@ -28,8 +29,9 @@ public class OneOssanOrderListServlet extends HttpServlet {
 //			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
 //			return;
 //		}
-//		MemberBean mb = (MemberBean) session.getAttribute("LoginOK");
-		Integer key = (Integer)session.getAttribute("OssanSessionPKey");
+		OssanBean mb = (OssanBean) session.getAttribute("LoginOK");
+		Integer key = mb.getOssanNo();
+//		Integer key = (Integer)session.getAttribute("OssanSessionPKey");
 		
 		OrderService os = new OrderServiceImplHibernate();
 		
