@@ -91,7 +91,7 @@ public class LoginServletWithAdmin extends HttpServlet {
 		// 將密碼加密兩次，以便與存放在表格內的密碼比對
 		password = GlobalService.getMD5Endocing(GlobalService.encryptString(password));
 		OssanBean mb = null;
-		OssanBean mbA = null;
+//		OssanBean mbA = null;
 		try {
 			// 呼叫 loginService物件的 checkIDPassword()，傳入userid與password兩個參數
 			mb = loginService.checkIDPassword(userId, password);

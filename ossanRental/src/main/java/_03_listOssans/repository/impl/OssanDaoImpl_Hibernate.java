@@ -3,6 +3,7 @@ package _03_listOssans.repository.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -174,6 +175,7 @@ public class OssanDaoImpl_Hibernate implements Serializable, OssanDao {
 		
 		return bean;
 	}
+
 
 	@Override
 	public int deleteOssan(int ossanNo) {

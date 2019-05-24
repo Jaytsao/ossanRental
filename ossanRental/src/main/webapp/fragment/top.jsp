@@ -11,6 +11,8 @@
 <hr>
 <table>
 	<c:if test="${empty LoginOK && empty AdminLoginOK}">
+
+	
 	<tr height="24px" >
 		<td width="128px"></td>		
 		<td>

@@ -65,17 +65,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import _00_init.util.DBService;
 import _00_init.util.HibernateUtils;
 import _00_init.util.SystemUtils2018;
 import _03_listOssans.model.OssanBean;
