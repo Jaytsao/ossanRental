@@ -24,9 +24,6 @@ public interface ArticleService {
 
 	// 依artNo來刪除單筆記錄
 	int deleteArticle(int artNo);
-
-	// 新增一筆記錄
-	int saveArticle(ArticleBean article);
 	
 	int getTotalPages(int seqNo);
 

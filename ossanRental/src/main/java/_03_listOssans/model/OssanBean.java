@@ -53,7 +53,7 @@ public class OssanBean implements Serializable {
 	private Set<ArticleBean> articleBean;
 	
 	
-	@OneToMany(mappedBy="ossanBean",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="ossanBean" , cascade = CascadeType.ALL)
 	public Set<ArticleBean> getArticleBean() {
 		return articleBean;
 	}

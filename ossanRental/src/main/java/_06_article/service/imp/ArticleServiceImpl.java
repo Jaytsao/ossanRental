@@ -157,23 +157,6 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	public int saveArticle(ArticleBean article) {
-		Session session = factory.getCurrentSession();
-		int n = 0;
-		Transaction tx = null ;
-		try {
-			tx = session.beginTransaction();
-			n = dao.saveArticle(article);
-			tx.commit();
-		}catch (Exception e) {
-			if(tx != null)
-				tx.rollback();
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-		return n ;
-	}
-	@Override
 	public int saveArticle(ArticleBean art, Integer seqNo) {
 		Session session = factory.getCurrentSession();
 		int n = 0;

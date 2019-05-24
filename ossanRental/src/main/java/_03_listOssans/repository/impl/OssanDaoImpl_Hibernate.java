@@ -3,7 +3,6 @@ package _03_listOssans.repository.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -16,7 +15,6 @@ import _00_init.util.HibernateUtils;
 import _00_init.util.SystemUtils2018;
 import _03_listOssans.model.OssanBean;
 import _03_listOssans.repository.OssanDao;
-import _06_article.model.ArticleBean;
 
 // 本類別使用純JDBC的技術來存取資料庫。
 // 所有SQLException都以catch區塊捕捉，然後一律再次丟出RuntimeException。
@@ -181,8 +179,8 @@ public class OssanDaoImpl_Hibernate implements Serializable, OssanDao {
 	public int deleteOssan(int ossanNo) {
 		int n = 0;
 		Session session = factory.getCurrentSession();
-		OssanBean bb = new OssanBean();
-		bb.setOssanNo(ossanNo);
+		String hql = "FROM OssanBean o WHERE o.ossanNo = :id";
+		OssanBean bb = (OssanBean) session.createQuery(hql).setParameter("id", ossanNo).uniqueResult();
 		session.delete(bb);
 		n++;
 		return n;

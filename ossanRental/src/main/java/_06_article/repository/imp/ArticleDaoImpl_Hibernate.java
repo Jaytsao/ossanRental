@@ -145,21 +145,13 @@ public class ArticleDaoImpl_Hibernate implements ArticleDao{
 	}
 
 	@Override
-	public int saveArticle(ArticleBean article) {
-		int n = 0;
-		Session session = factory.getCurrentSession();
-//		OssanBean mob = session.get(OssanBean.class, Integer.parseInt(article.getA()));
-//		article.setOssanBean(mob);
-		session.save(article);
-		n++;
-		return n;
-	}
-	@Override
 	public int saveArticle(ArticleBean art, Integer seqNo) {
 		int n = 0;
 		Session session = factory.getCurrentSession();
 		OssanBean mob = session.get(OssanBean.class, seqNo);
+		mob.getArticleBean().add(art);
 		art.setOssanBean(mob);
+		session.save(mob);
 		session.save(art);
 		n++;
 		return n;
